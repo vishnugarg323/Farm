@@ -8,18 +8,19 @@ import jakarta.persistence.Id;
 import java.util.Objects;
 
 /**
- * Entity class representing the harvested data of a specific farm.
- * Contains information about the crops harvested and the actual yield.
+ * Entity class representing the planting data of a specific farm.
+ * Contains information about the crops planted, expected yield, and the area planted.
  */
 @Entity
-public class HarvestData {
+public class PlantingData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long farmId;
     private String cropType;
-    private double actualAmount;  // in tons
+    private double areaPlanted;  // in acres
+    private double expectedAmount;  // in tons
 
     public Long getId() {
         return id;
@@ -45,12 +46,20 @@ public class HarvestData {
         this.cropType = cropType;
     }
 
-    public double getActualAmount() {
-        return actualAmount;
+    public double getAreaPlanted() {
+        return areaPlanted;
     }
 
-    public void setActualAmount(double actualAmount) {
-        this.actualAmount = actualAmount;
+    public void setAreaPlanted(double areaPlanted) {
+        this.areaPlanted = areaPlanted;
+    }
+
+    public double getExpectedAmount() {
+        return expectedAmount;
+    }
+
+    public void setExpectedAmount(double expectedAmount) {
+        this.expectedAmount = expectedAmount;
     }
 
     @Override
@@ -59,14 +68,14 @@ public class HarvestData {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        HarvestData that = (HarvestData) o;
-        return Double.compare(actualAmount, that.actualAmount) == 0 && Objects.equals(id,
-                that.id) && Objects.equals(farmId, that.farmId) && Objects.equals(cropType,
-                that.cropType);
+        PlantingData that = (PlantingData) o;
+        return Double.compare(areaPlanted, that.areaPlanted) == 0 && Double.compare(expectedAmount,
+                that.expectedAmount) == 0 && Objects.equals(id, that.id) && Objects.equals(farmId,
+                that.farmId) && Objects.equals(cropType, that.cropType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, farmId, cropType, actualAmount);
+        return Objects.hash(id, farmId, cropType, areaPlanted, expectedAmount);
     }
 }
